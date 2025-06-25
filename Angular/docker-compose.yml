@@ -1,0 +1,6 @@
+services:
+  angular-hello:
+    image: angular-hello:1.0.1
+    build: .
+    ports:
+      - 3000:3000

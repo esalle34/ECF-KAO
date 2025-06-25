@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: java-hello
+  template:
+    metadata:
+      labels:
+        app: java-hello
+    spec:
+      containers:
+      - name: java-hello
+        image: java-hello:1.0.1
+        env:
+          - name: SPRING_ELASTICSEARCH_URIS
+            valueFrom:
+              configMapKeyRef:
+                name: java-hello         
+                key: spring_elasticsearch_uris
+          - name: SPRING_ELASTICSEARCH_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: java-hello         
+                key: spring_elasticsearch_username
+          - name: SPRING_ELASTICSEARCH_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: java-hello         
+                key: spring_elasticsearch_password
+        ports:
+        - containerPort: 8080

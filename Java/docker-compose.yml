@@ -1,0 +1,46 @@
+services:
+  elasticsearch:
+    image: elasticsearch:8.8.1
+    container_name: elastic
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./es/data:/usr/share/elasticsearch/data:rw
+      - ./es/logs:/usr/share/elasticsearch/logs:rw
+    ports:
+      - 9200:9200
+    networks:
+      - elasticnetwork
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:8.3.3-arm64
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=http://localhost:9200
+    networks:
+      - elasticnetwork    
+  java-hello:
+    image: java-hello:1.0.1
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - elasticsearch
+    networks:
+      - elasticnetwork
+    environment:
+      - SPRING_ELASTICSEARCH_URIS=elasticsearch:9200
+
+networks:
+  elasticnetwork:
+    driver: bridge
+

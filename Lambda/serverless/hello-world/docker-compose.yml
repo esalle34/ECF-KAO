@@ -1,0 +1,4 @@
+services:
+  lambda:
+    image: lambda:1.0.1
+    build: .

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: java-hello
+  template:
+    metadata:
+      labels:
+        app: java-hello
+    spec:
+      containers:
+      - name: java-hello
+        image: java-hello:1.0.1
+        ports:
+        - containerPort: 8080

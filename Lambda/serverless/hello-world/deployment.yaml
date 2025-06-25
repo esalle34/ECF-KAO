@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lambda
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lambda
+  template:
+    metadata:
+      labels:
+        app: lambda
+    spec:
+      containers:
+      - name: lambda
+        image: lambda:1.0.1
