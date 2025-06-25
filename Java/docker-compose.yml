@@ -1,0 +1,6 @@
+services:
+  java-hello:
+    image: java-hello:1.0.1
+    build: .
+    ports:
+      - 8080:8080

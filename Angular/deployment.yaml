@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: angular-hello
+  template:
+    metadata:
+      labels:
+        app: angular-hello
+    spec:
+      containers:
+      - name: angular-hello
+        image: angular-hello:1.0.1
+        ports:
+        - containerPort: 3000
